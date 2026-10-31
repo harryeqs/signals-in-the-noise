@@ -1,1 +1,4 @@
-# signals-in-the-noise
+# Signals in the Noise: An Introduction to Signal Processing
+How can we recover meaningful information from noisy recordings? This course introduces the mathematical foundations of signal processing through audio analysis and noise reduction. Students will explore how sounds are represented digitally, how Fourier transforms reveal their frequency components, and how convolution and digital filtering can be used to process signals.
+
+The course also introduces fundamental ideas in statistical signal processing, including random noise, probability distributions, correlation, and signal estimation. Through hands-on exercises using Audacity and Python, students will apply these concepts to a mini-project in which they recover hidden messages from noisy audio recordings.

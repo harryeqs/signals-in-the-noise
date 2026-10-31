@@ -1,0 +1,574 @@
+
+% !TEX program = xelatex
+% !TEX encoding = UTF-8
+\documentclass[12pt,fontset=none]{ctexart}
+
+\usepackage[margin=2cm,includefoot]{geometry}
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+
+% Fonts
+\setmainfont{Palatino}[Ligatures=TeX]
+\setCJKmainfont{Songti SC}[
+  Script = Default,
+  BoldFont = Songti SC Bold,
+  ItalicFont = Songti SC,
+  SlantedFont = Songti SC,
+  BoldItalicFont = Songti SC Bold,
+  BoldSlantedFont = Songti SC,
+]
+\setCJKsansfont{Songti SC}[
+  Script = Default,
+  BoldFont = Songti SC Bold,
+]
+\setCJKmonofont{Songti SC}[Script=Default]
+
+\ctexset{
+  section = {
+    format = \Large\bfseries\raggedright,
+    aftername = \quad,
+  },
+  subsection = {
+    format = \large\bfseries\raggedright,
+    aftername = \quad,
+  },
+  subsubsection = {
+    format = \normalsize\bfseries\raggedright,
+    aftername = \quad,
+  },
+}
+
+\pagestyle{plain}
+
+\setlist[itemize]{
+  leftmargin=1.5em,
+  itemsep=0.15em,
+  topsep=0.25em
+}
+\setlist[enumerate]{
+  leftmargin=1.6em,
+  itemsep=0.2em,
+  topsep=0.3em
+}
+\renewcommand{\arraystretch}{1.25}
+
+\newcommand{\coursetitle}[3]{%
+  \begin{center}
+    {\LARGE #1\par}
+    \vspace{1.4em}
+    {\large #2\par}
+    \vspace{0.3em}
+    {\large #3\par}
+  \end{center}
+}
+
+\hypersetup{
+  pdftitle={Signals in the Noise:
+  An Introduction to Signal Processing}
+}
+
+\begin{document}
+
+% ========================================
+% English
+% ========================================
+
+\renewcommand{\theHsection}{en.\arabic{section}}
+
+\coursetitle
+  {\textbf{Signals in the Noise: \\
+  An Introduction to Signal Processing}}
+  {Tutor: Qianshuo Ye}
+  {Winter 2026}
+
+\thispagestyle{plain}
+
+\section{Course Information}
+
+\begin{tabular}{@{}>{\bfseries}l l@{}}
+Class hours & 12 (6 $\times$ 2-hour sessions) \\
+Meeting time & TBD \\
+Format & Lectures and hands-on practicals \\
+Delivery mode & Online (live, interactive sessions) \\
+Tools & Google Colab, Python, Audacity (optional)
+\end{tabular}
+
+\section{Course Description}
+
+How can we recover meaningful information from noisy
+recordings? This course introduces the mathematical
+foundations of signal processing through audio analysis
+and noise reduction. Students will explore how sounds
+are represented digitally, how Fourier transforms reveal
+their frequency components, and how convolution and
+digital filtering can be used to process signals.
+
+The course also introduces fundamental ideas in
+statistical signal processing, including random noise,
+probability distributions, correlation, and signal
+estimation. Through hands-on exercises using Audacity
+and Python, students will apply these concepts to a
+mini-project in which they recover hidden messages
+from noisy audio recordings.
+
+\section{Prerequisites}
+
+The course is designed for high school students
+with a basic understanding of algebra, functions,
+and trigonometry. Familiarity with elementary
+probability and statistics is helpful but not required.
+No prior knowledge of signal processing is assumed.
+
+Basic Python programming experience is desirable. Students can familiarise themselves with Python by completing the course \href{https://github.com/CambridgeEngineering/PartIA-Computing-Michaelmas}{PartIA-Computing-Michaelmas}.
+
+\section{Learning Objectives}
+
+By the end of this course, students will be able to:
+
+\begin{enumerate}
+  \item Explain how audio signals are represented and
+  sampled, and distinguish between time-domain and
+  frequency-domain representations.
+
+  \item Understand the principles of Fourier transforms,
+  convolution, and digital filtering, and apply them
+  to simple audio signals.
+
+  \item Describe noise using basic statistical concepts,
+  including probability distributions, variance,
+  correlation, and signal-to-noise ratio (SNR).
+
+  \item Implement basic audio noise reduction methods
+  using Python and evaluate their performance.
+
+  \item Apply signal processing techniques to recover
+  hidden information from noisy audio recordings.
+\end{enumerate}
+
+\section{Syllabus}
+
+\subsection{Signals, Sound and Sampling}
+
+\begin{itemize}
+  \item Sound waves: amplitude, frequency, period,
+  and phase.
+  \item Continuous-time and discrete-time signals.
+  \item Superposition of sinusoidal signals.
+  \item Digital sampling, sampling rate, Nyquist
+  frequency, and aliasing.
+\end{itemize}
+
+Key equations:
+\begin{align*}
+x(t) &= A\sin(2\pi ft+\phi),\\
+x[n] &= x(n/f_s),\\
+f_s &> 2f_{\max}.
+\end{align*}
+
+\subsection{Fourier Analysis}
+
+\begin{itemize}
+  \item Time-domain and frequency-domain representations.
+  \item Fourier transform and frequency decomposition.
+  \item Discrete Fourier transform (DFT) and fast
+  Fourier transform (FFT).
+  \item Magnitude spectrum, phase spectrum,
+  and frequency resolution.
+\end{itemize}
+
+Key equations:
+\begin{align*}
+X[k] &= \sum_{n=0}^{N-1}
+x[n]e^{-i2\pi kn/N},\\
+f_k &= \frac{kf_s}{N},\qquad
+\Delta f = \frac{f_s}{N}.
+\end{align*}
+
+\subsection{Convolution and Digital Filtering}
+
+\begin{itemize}
+  \item Linear time-invariant (LTI) systems
+  and impulse responses.
+  \item Discrete convolution and moving average filters.
+  \item Low-pass, high-pass, and band-pass filtering.
+  \item Frequency responses and the convolution theorem.
+\end{itemize}
+
+Key equations:
+\begin{align*}
+y[n] &= \sum_k x[k]h[n-k],\\
+y[n] &= \frac{1}{M}
+\sum_{k=0}^{M-1}x[n-k],\\
+Y(\omega) &= X(\omega)H(\omega).
+\end{align*}
+
+\subsection{Statistical Signal Processing}
+
+\begin{itemize}
+  \item Deterministic and random signals.
+  \item Random variables and Gaussian noise.
+  \item Mean, variance, and standard deviation.
+  \item White noise, coloured noise, and correlation.
+  \item Signal power and signal-to-noise ratio (SNR).
+\end{itemize}
+
+Key equations:
+\begin{align*}
+y[n] &= x[n]+\epsilon[n],\\
+\epsilon[n] &\sim \mathcal{N}(0,\sigma^2),\\
+\sigma^2 &= \mathbb{E}[(X-\mu)^2],\\
+R_x[\tau] &= \mathbb{E}[x[n]x[n-\tau]],\\
+\mathrm{SNR}_{\mathrm{dB}}
+&=10\log_{10}\frac{P_x}{P_\epsilon}.
+\end{align*}
+
+\subsection{Audio Noise Reduction}
+
+\begin{itemize}
+  \item Noise reduction as a signal estimation problem.
+  \item Time-domain and frequency-domain filtering.
+  \item Introduction to spectrograms and
+  short-time Fourier transforms (STFT).
+  \item Noise power estimation and basic Wiener filtering.
+  \item Evaluation using mean squared error (MSE)
+  and SNR improvement.
+\end{itemize}
+
+Key equations:
+\begin{align*}
+\hat X[k] &= H[k]Y[k],\\
+H[k] &= \frac{P_x[k]}{P_x[k]+P_\epsilon[k]},\\
+\mathrm{MSE}
+&= \frac{1}{N}\sum_{n=0}^{N-1}
+(x[n]-\hat x[n])^2.
+\end{align*}
+
+\subsection{Signal Recovery Mini-Project}
+
+\begin{itemize}
+  \item Identifying noise characteristics from
+  audio waveforms and frequency spectra.
+  \item Selecting and implementing suitable
+  noise reduction methods.
+  \item Comparing performance under different
+  noise types and SNR levels.
+  \item Recovering and decoding hidden messages.
+  \item Interpreting results and discussing
+  the limitations of different methods.
+\end{itemize}
+
+\section{Schedule}
+
+\begin{center}
+\small
+\begin{tabular}{@{}c p{4cm} p{10.8cm}@{}}
+\toprule
+Session & Topic & Practical Exercise \\
+\midrule
+
+1 & Signals, Sound and Sampling
+  & Record and visualise audio in Audacity;
+    generate sinusoidal signals in Python
+    and investigate the effects of sampling. \\
+
+2 & Fourier Analysis
+  & Analyse audio spectra using Audacity
+    and Python FFT; identify hidden frequency
+    components in a mixed signal. \\
+
+3 & Convolution and Digital Filtering
+  & Implement a moving average filter;
+    compare low-pass and high-pass filtering
+    on audio recordings. \\
+
+4 & Statistical Signal Processing
+  & Generate different types of noise;
+    examine their distributions and spectra;
+    add noise at specified SNR levels. \\
+
+5 & Audio Noise Reduction
+  & Implement and compare basic denoising
+    methods; evaluate their performance
+    using MSE and SNR improvement. \\
+
+6 & Signal Recovery Mini-Project
+  & Recover hidden messages from noisy
+    audio recordings and compare the
+    effectiveness of different methods. \\
+
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Deliverables}
+
+Students are expected to complete a mini-project
+and submit:
+
+\begin{enumerate}
+  \item A Python Jupyter Notebook implementing
+  audio noise reduction methods and evaluating
+  their performance on noisy recordings.
+
+  \item A brief project report (2--3 pages)
+  describing the methods, results, and key
+  observations from the signal recovery challenge.
+\end{enumerate}
+
+\section{Assessment}
+
+The course will be assessed through a practical
+signal recovery challenge. Students will be given
+audio recordings contaminated by different types
+and levels of noise and tasked with recovering
+the hidden messages.
+
+Assessment will consider the accuracy of message
+recovery, the effectiveness of the signal processing
+methods, and the clarity of the submitted explanations.
+
+% ========================================
+% Chinese
+% ========================================
+
+\clearpage
+\setcounter{section}{0}
+\renewcommand{\theHsection}{zh.\arabic{section}}
+
+\coursetitle
+  {\textbf{噪声中的信号：信号处理导论}}
+  {教师：叶千硕}
+  {冬季2026}
+
+\thispagestyle{plain}
+
+\section{课程信息}
+
+\begin{tabular}{@{}>{\bfseries}l l@{}}
+总课时 & 12小时（6次课，每次2小时） \\
+上课时间 & 待定 \\
+授课形式 & 理论讲解与实践操作相结合 \\
+授课平台 & 线上（直播，互动式教学） \\
+授课工具 & Google Colab, Python, Audacity（可选） \\
+\end{tabular}
+
+\section{课程简介}
+
+如何从充满噪声的录音中恢复有用的信息？
+本课程以音频信号为切入点，介绍信号处理的
+基本数学原理及其实际应用。
+学生将学习声音的数字化表示、
+傅里叶变换与频谱分析、卷积与数字滤波等核心概念。
+
+课程还将介绍统计信号处理的基本思想，
+包括随机噪声、概率分布、相关性与信号估计。
+通过 Audacity 和 Python 实践，
+学生将运用所学知识完成一项小型项目：
+从受到噪声干扰的音频中恢复隐藏的信息。
+
+\section{先修要求}
+
+本课程面向具备基本高中数学知识的学生，
+建议掌握代数、函数和三角函数的基础概念。
+具备初步的概率与统计知识将有所帮助，
+但不要求事先学习过信号处理。
+
+建议学生具备基本的 Python 编程经验。
+学生可以通过完成课程 \href{https://github.com/CambridgeEngineering/PartIA-Computing-Michaelmas}{PartIA-Computing-Michaelmas} 中的练习来熟悉 Python。
+实践环节将提供必要的示例代码与指导。
+
+\section{学习目标}
+
+学完本课程后，学生应能够：
+
+\begin{enumerate}
+  \item 理解音频信号的基本表示与采样方法，
+  并区分时域与频域表示。
+
+  \item 理解傅里叶变换、卷积和数字滤波的基本原理，
+  并将其应用于简单音频信号。
+
+  \item 使用概率分布、方差、相关性和信噪比等
+  基本统计概念描述噪声。
+
+  \item 使用 Python 实现基础音频降噪方法，
+  并评价其处理效果。
+
+  \item 运用信号处理方法从含噪音频中
+  恢复隐藏的信息。
+\end{enumerate}
+
+\section{教学大纲}
+
+\subsection{信号、声音与采样}
+
+\begin{itemize}
+  \item 声波的基本性质：振幅、频率、周期与相位。
+  \item 连续时间信号与离散时间信号。
+  \item 正弦信号的叠加原理。
+  \item 数字采样、采样率、奈奎斯特频率与混叠现象。
+\end{itemize}
+
+核心公式：
+\begin{align*}
+x(t) &= A\sin(2\pi ft+\phi),\\
+x[n] &= x(n/f_s),\\
+f_s &> 2f_{\max}.
+\end{align*}
+
+\subsection{傅里叶分析}
+
+\begin{itemize}
+  \item 信号的时域与频域表示。
+  \item 傅里叶变换与频率分解的基本思想。
+  \item 离散傅里叶变换（DFT）
+  与快速傅里叶变换（FFT）。
+  \item 幅度谱、相位谱与频率分辨率。
+\end{itemize}
+
+核心公式：
+\begin{align*}
+X[k] &= \sum_{n=0}^{N-1}
+x[n]e^{-i2\pi kn/N},\\
+f_k &= \frac{kf_s}{N},\qquad
+\Delta f = \frac{f_s}{N}.
+\end{align*}
+
+\subsection{卷积与数字滤波}
+
+\begin{itemize}
+  \item 线性时不变系统（LTI）与冲激响应。
+  \item 离散卷积与移动平均滤波。
+  \item 低通、高通与带通滤波器。
+  \item 频率响应与卷积定理。
+\end{itemize}
+
+核心公式：
+\begin{align*}
+y[n] &= \sum_k x[k]h[n-k],\\
+y[n] &= \frac{1}{M}
+\sum_{k=0}^{M-1}x[n-k],\\
+Y(\omega) &= X(\omega)H(\omega).
+\end{align*}
+
+\subsection{统计信号处理}
+
+\begin{itemize}
+  \item 确定性信号与随机信号。
+  \item 随机变量与高斯噪声。
+  \item 均值、方差与标准差。
+  \item 白噪声、有色噪声及相关性。
+  \item 信号功率与信噪比（SNR）。
+\end{itemize}
+
+核心公式：
+\begin{align*}
+y[n] &= x[n]+\epsilon[n],\\
+\epsilon[n] &\sim \mathcal{N}(0,\sigma^2),\\
+\sigma^2 &= \mathbb{E}[(X-\mu)^2],\\
+R_x[\tau] &= \mathbb{E}[x[n]x[n-\tau]],\\
+\mathrm{SNR}_{\mathrm{dB}}
+&=10\log_{10}\frac{P_x}{P_\epsilon}.
+\end{align*}
+
+\subsection{音频降噪}
+
+\begin{itemize}
+  \item 将降噪理解为信号估计问题。
+  \item 时域滤波与频域滤波。
+  \item 声谱图与短时傅里叶变换（STFT）简介。
+  \item 噪声功率估计与维纳滤波基础。
+  \item 使用均方误差（MSE）
+  和信噪比改善量评价降噪效果。
+\end{itemize}
+
+核心公式：
+\begin{align*}
+\hat X[k] &= H[k]Y[k],\\
+H[k] &= \frac{P_x[k]}{P_x[k]+P_\epsilon[k]},\\
+\mathrm{MSE}
+&= \frac{1}{N}\sum_{n=0}^{N-1}
+(x[n]-\hat x[n])^2.
+\end{align*}
+
+\subsection{信号恢复小项目}
+
+\begin{itemize}
+  \item 通过音频波形与频谱识别噪声特征。
+  \item 选择并实现合适的降噪方法。
+  \item 比较不同噪声类型和信噪比下的处理效果。
+  \item 从含噪录音中恢复并破译隐藏的信息。
+  \item 分析实验结果及不同方法的局限性。
+\end{itemize}
+
+\section{教学进度}
+
+\begin{center}
+\small
+\begin{tabular}{@{}c p{3.5cm} p{11.3cm}@{}}
+\toprule
+课次 & 主题 & 实践内容 \\
+\midrule
+
+1 & 信号、声音与采样
+  & 使用 Audacity 录制并观察音频波形；
+    使用 Python 生成正弦信号，
+    探索不同采样率的影响。 \\
+
+2 & 傅里叶分析
+  & 使用 Audacity 和 Python FFT 分析音频频谱，
+    识别混合信号中的隐藏频率。 \\
+
+3 & 卷积与数字滤波
+  & 实现移动平均滤波器；
+    比较低通和高通滤波对音频信号的影响。 \\
+
+4 & 统计信号处理
+  & 生成不同类型的噪声，
+    比较其概率分布与频谱，
+    并向录音中加入指定信噪比的噪声。 \\
+
+5 & 音频降噪
+  & 实现并比较基础降噪方法；
+    使用均方误差与信噪比改善量评价效果。 \\
+
+6 & 信号恢复小项目
+  & 从受到噪声污染的录音中恢复隐藏信息，
+    并比较不同处理方法的有效性。 \\
+
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{课程成果}
+
+课程结束时，学生需要完成一项小型项目，
+并提交以下成果：
+
+\begin{enumerate}
+  \item 一份 Python Jupyter Notebook，
+  实现基础音频降噪方法，
+  并在含噪录音上评价其效果。
+
+  \item 一份简短的项目报告（2--3页），
+  介绍信号恢复挑战中使用的方法、
+  处理结果及主要观察。
+\end{enumerate}
+
+\section{课程考核}
+
+课程以实践性的信号恢复挑战作为主要考核形式。
+学生将获得受到不同类型、
+不同强度噪声干扰的音频，
+并运用课堂所学知识，
+选择合适的方法恢复其中隐藏的信息。
+
+考核将综合考虑信息恢复的准确率、
+降噪方法的有效性，
+以及对处理过程与结果解释的清晰程度。
+
+\end{document}
